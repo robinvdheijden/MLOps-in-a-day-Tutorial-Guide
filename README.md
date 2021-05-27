@@ -63,7 +63,7 @@ Azure Machine Learning uses a Machine Learning Operations (MLOps) approach, whic
   - [Additional resources and more information](#additional-resources-and-more-information)
 
 
-## Prerequisite: resource group
+## Prerequisite: Resource group
 
 A resource group is a container for resources (Azure services). It is equivalent to a folder that contains files.
 
@@ -80,25 +80,21 @@ To create a resource group:
 
 ## Exercise 1: Setup New Project in Azure DevOps
 
-In this exercise you will set up a project in DevOps and import a repository that we have build for you.
+In this exercise you will set up a project in DevOps and import a repository that we have created for you.
 
 Duration: 20 minutes
 
-### Task 1: Create New Project 
-
-__Note__: Project has already been set up for you, continue with task 2.
+### Task 1: Create New Project
 
 1. Sign in to [Azure DevOps](http://dev.azure.com).
 
-2. Create your own organization or use an existing one. As long as it's your own organization. Choose your own name when creating a new organization
+2. Create an organization, the highest hierarchy level within Azure Devops. The name should be prefilled and based on your lab account. Select West Europe as the region.
 
-3. Select **New project**.
+   ![Create new organization in Azure DevOps.](media/devops-organization-01.png "Create new organization")
 
-   ![Create new project in Azure DevOPs.](media/devops-project-01.png "Create new project")
+3. Create **New project**, provide Project Name: `mlops-quickstart` and select **Create**.
 
-4. Provide Project Name: `mlops-quickstart` and select **Create**.
-
-   ![Provide project name in the create new project dialog and then select create.](media/devops-project-02.png "Create New Project Dialog")
+   ![Create new project in Azure DevOps.](media/devops-project-01.png "Create new project")
 
 ### Task 2: Import Quickstart code from a GitHub Repo
 
@@ -112,7 +108,7 @@ In this task you import a repository from GitHub. This repository mostly consist
 
    ![Import Quickstart code from a GitHub Repo.](media/devops-project-03.png "Azure DevOps Repos")
 
-2. Provide the following GitHub URL: TODO `https://github.com/Bramcals/MLOps-starter.git` and select **Import**. This should import the code required for the quickstart.
+2. Provide the following GitHub URL: `https://dev.azure.com/mlopsinaday/specialist-track/_git/mlops-quickstart` and select **Import**. This should import the code required for the quickstart.
 
    ![Provide the above GitHub URL and select import to import the source code.](media/devops-project-04.png "Import a Git repository dialog")
 
@@ -169,7 +165,7 @@ We make a connection between DevOps and the resource group.
    - Name your service connection: `quick-starts-sc-rg`
    - Grant access permission to all pipelines
 
-   b. Subscription: `VQD Data Science`
+   b. Subscription: `Azure Labs H-06`
 
    c. Resource group: This value should match the value you just provided in the library as a variable: `RG-XXXXXX` (replace `XXXXXX` with your UniqueID)
 
@@ -250,7 +246,7 @@ In this exercise, the IAC pipeline will be built. This pipeline will create the 
 
 3. Select **mlops-quickstart** as your repository.
 
-4. Select **Existing Azure Pipelines YAML file**, select **/environment_setup/IAC-pipeline.yml** as your path and select continue
+4. Select **Existing Azure Pipelines YAML file**, select **/environment_setup/iac-pipeline.yml** as your path and select continue
 
 5. Review your pipeline YAML
 
@@ -319,7 +315,7 @@ Now that the Azure Machine Learning (AML) resource is created, we will create a 
    - Name your service connection: `quick-starts-sc-aml`
    - Grant access permission to all pipelines
 
-   b. Subscription: `VQD Data Science`
+   b. Subscription: `Azure Labs H-06`
 
    <!-- > **Note**: It might take up to 30 seconds for the **Subscription** dropdown to be populated with available subscriptions, depending on the number of different subscriptions your account has access to. -->
 
@@ -433,7 +429,7 @@ Duration: 25 minutes
 
 ## Exercise 5: Setup the Release Pipeline
 
-Now that the train pipeline has succeeded, artifacts (model & `eval_info.json`) are available to set up the Release pipeline (sometimes called the deployment pipeline). Since we like the deployment to kick off directly after the train pipeline has succeeded, we use a release pipeline. Continuous integration is currently not possible within the pipeline section in Azure DevOps. Hence, instead of using a YAML file like we did for the IAC and Train pipeline, for the Release pipeline you will create these steps yourself. Furthermore, you will create variables required to perform the steps.
+Now that the train pipeline has succeeded, artifacts (model & `eval_info.json`) are available to set up the Release pipeline (sometimes called the deployment pipeline). Since we like the deployment to kick off directly after the train pipeline has succeeded, we use a release pipeline. Continuous integration is currently not possible within the release pipeline section in Azure DevOps. Hence, instead of using a YAML file with executable steps like we did for the CI, IAC and Train pipeline, for the Release pipeline you will create these steps yourself. Furthermore, you will create variables required to perform the steps.
 
 Duration: 20 minutes
 
@@ -479,13 +475,11 @@ These variables are needed to deploy the model.
 
     b. Name: `aks_region` Value: should be the same region as the region of your Azure Machine Learning workspace (probably `westeurope`)
 
-    c. Name: `service_name` Value: `compliance-service-` add here the number of your account name you used to log in on to this page (provided in the teams chat). When you click in the top right icon on this webpage you can view the account name.
+    c. Name: `service_name` Value: `compliance-service-XXXXXX` where XXXXXX is replaced by your UniqueID, which can be obtained from the Environment Details tab next to the Lab Guide.
 
     d. Name: `description` Value: `"Compliance Classifier Web Service"` (Note the double quotes around description value).
 
-**Note**: - Keep the scope for the variables to `Deploy & Test` stage.
-
-    - Make sure the service_name includes your the number of your account. The number of your account name you used to log in on to this page (provided in the teams chat). When you click in the top right icon of DevOps you can view the account name.
+Set the scope for the variables to `Deploy & Test` stage.
 
 <!-- ![Add four pipeline variables as name value pairs and save.](media/devops-release-pipeline-08.png "Add Pipeline Variables") -->
 
@@ -495,7 +489,7 @@ These variables are needed to deploy the model.
 
    ![Open view stage tasks link.](media/devops-release-pipeline-09.png "Pipeline Tasks")
 
-2. Select **Agent job** and change **Agent pool** to `Azure Pipelines` and change **Agent Specification** to `ubuntu-16.04`.
+2. Select **Agent job** and set **Agent pool** to `Azure Pipelines` and **Agent Specification** to `ubuntu-16.04`.
 
    ![Change Agent pool to be Hosted Ubuntu 1604.](media/devops-release-pipeline-10.png "Agent Job Setup")
 
@@ -555,7 +549,7 @@ These variables are needed to deploy the model.
 
    ![Setup the Azure CLI task using the information above.](media/sc-devops-release-pipeline.png "Azure CLI Task Dialog")
 
-Please review the code in `aml_service/deploy.py`. This step will read `eval_info.json` and if the evaluation step decided to deploy the new trained model, it will deploy the new model to production in an **Azure Kubernetes Service (AKS)** cluster.
+Please review the code in `aml_service/deploy.py` by right clicking the Repos tab, opening the Repo in a new tab and navigating to the script. This step will read `eval_info.json` and if the evaluation step decided to deploy the new trained model, it will deploy the new model to production in an **Azure Kubernetes Service (AKS)** cluster.
 
 ### Task 8: Define Deployment Trigger
 
@@ -591,7 +585,7 @@ In this exercise you will execute the release pipeline and use the artifact from
 
 ### Task 1: Start Release pipeline
 
-1. Navigate to **Pipelines, Releases** and select **create release**
+1. Navigate to **Pipelines, Releases** and select **Create a release** from the Release-Pipeline you just created.
 
    ![Create release.](media/create-release.png "create release")
 
@@ -615,7 +609,7 @@ Duration: 5 minutes
 
 ### Task 1: Get URI and Primary key of model
 
-1. Open the Azure Machine Learning Platform [link](https://ml.azure.com/). Make sure you are in the Azure Machine Learning workspace that you created for this tutorial.
+1. Open the Azure Machine Learning Platform [link](https://ml.azure.com/). Make sure you select the Azure Machine Learning workspace that you created for this tutorial (containing your UniqueID).
 
 2. Go to the models tab and click on your latest model.
 
@@ -633,11 +627,13 @@ Duration: 5 minutes
 
 ### Task 2: Query the deployed model via Postman
 
-1. Open Postman (program that you installed prior to this tutorial. If you haven't installed Postman yet, please download and follow the instruction from the following [link](https://www.postman.com/downloads/))
+1. Open Postman, a program that is already installed in your CloudLab environment, and skip the login screen. If Postman has not been installed yet, please download and follow the instruction from the following [link](https://www.postman.com/downloads/)
+
+![Open Postman and skip login](media/postman-login-01.png "Postman login")
 
 2. Click on the + sign (top left corner)
 
-<!-- ![Click on plus sign](media/plus-sign.png 'New request') -->
+![Click on the plus sign](media/postman-plus-02.png "Postman plus")
 
 3. Select "POST" as the request type
 
@@ -645,23 +641,22 @@ Duration: 5 minutes
 
 5. Go to the authorization tab, choose the Bearer Token as type and paste the primary key from the previous task as token.
 
-   ![Fill in postman settings](media/sc_post_request.png "Post request")
+   ![Fill in postman settings](media/postman-request-03.png "Post request")
 
 6. Go to the Body tab, select raw data and select JSON as its format.
 
 7. Insert the following data: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 2, 5, 6, 4, 3, 1, 34]]
 
-   ![Fill in postman settings](media/sc_send_request.png "Post request")
+   ![Fill in postman settings](media/postman-body-04.png "Post request")
 
 8. Press send and examine the output
 
-9. If the models predicts a 0, the car complies to the government regulations. If 1 is predicted, the model predicts that the car does not comply to the regulations and probably be an old car with a relatively high carbon footprint.
+9. If the models predicts a 0, the car complies to the government regulations. If a 1 is predicted, the model says that the car does not comply to regulations and is probably an old car with a relatively high carbon footprint.
 
 ## Wrap-up
 
-Congratulations on completing this tutorial.
-If you want to continue practicing with ML Ops, we have created additional exercises. Find out about automation and continous integration of ML Ops with the following exercise [link](#Additional-Exercise-Test-train-and-Release-Pipelines).
-If you no longer intend to use your Azure Portal subscriptions with your created resources, please do not forget to delete your resources. Instructions on how to delete your resources are provided in the following exercise [link](#Deletion-Exercise-Delete-resource-in-the-Azure-Portal)
+Congratulations on completing this tutorial!
+If you want to continue practicing with ML Ops, we have created additional exercises. Find out about automation and continous integration of ML Ops with the following exercise [link](#Take-Home Exercise: Test train and Release Pipelines).
 
 To recap, in this tutorial you learned about:
 
@@ -673,9 +668,8 @@ To recap, in this tutorial you learned about:
 
 4. Creating a Release Pipeline to support model deployment.
 
-## Deletion Exercise: Delete resource in the Azure Portal
-
-Don't forget to delete your resource on the Azure Portal if you don't have a free subscription. With a free subscription everything will automatically be deleted after 30 days, so you still have some time to practice after this tutorial.
+<!-- ## Deletion Exercise: Delete resource in the Azure Portal
+If you no longer intend to use your Azure Portal subscriptions with your created resources, please do not forget to delete your resources on the Azure Portal if you don't have a free subscription. With a free subscription everything will automatically be deleted after 30 days, so you still have some time to practice after this tutorial.
 
 If you don't have a free subscription and you would like to delete all your resources, do the following;
 
@@ -683,7 +677,7 @@ If you don't have a free subscription and you would like to delete all your reso
 
 2. Go to Resource Groups and find you Resource Group.
 
-3. Click on "Delete Resource group" in the top menu bar.
+3. Click on "Delete Resource group" in the top menu bar.-->
 
 ## Take-Home Exercise: Test train and Release Pipelines
 
