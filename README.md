@@ -165,7 +165,7 @@ We make a connection between DevOps and the resource group.
    - Name your service connection: `quick-starts-sc-rg`
    - Grant access permission to all pipelines
 
-   b. Subscription: `Azure Labs H-06`
+   b. Subscription: Select the Azure subscription to use.
 
    c. Resource group: This value should match the value you just provided in the library as a variable: `RG-XXXXXX` (replace `XXXXXX` with your UniqueID)
 
@@ -315,8 +315,7 @@ Now that the Azure Machine Learning (AML) resource is created, we will create a 
    - Name your service connection: `quick-starts-sc-aml`
    - Grant access permission to all pipelines
 
-   b. Subscription: `Azure Labs H-06`
-
+   b. Subscription: Select the Azure subscription to use.
    <!-- > **Note**: It might take up to 30 seconds for the **Subscription** dropdown to be populated with available subscriptions, depending on the number of different subscriptions your account has access to. -->
 
    c. Resource group: This value should match the value you just provided in the library as variable: `RG-XXXXXX` (replace `XXXXXX` with your UniqueID) 
