@@ -86,21 +86,17 @@ Duration: 20 minutes
 
 ### Task 1: Create New Project
 
-1. Sign in to [Azure DevOps](http://dev.azure.com).
+1. Sign in to [Azure DevOps](http://dev.azure.com) , enter the values required to proceed.
 
-2. Create an organization, the highest hierarchy level within Azure Devops. The name should be prefilled and based on your lab account. Select West Europe as the region.
+2. Select the organisation named **MLOps-in-day** and project named **MLOps-XXXXXX**.
 
-   ![Create new organization in Azure DevOps.](media/devops-organization-01.png "Create new organization")
-
-3. Create **New project**, provide Project Name: `mlops-quickstart` and select **Create**.
-
-   ![Create new project in Azure DevOps.](media/devops-project-01.png "Create new project")
+   ![select project in Azure DevOps.](media/dev-09.png "select project")
 
 ### Task 2: Import Quickstart code from a GitHub Repo
 
 In this task you import a repository from GitHub. This repository mostly consists of Python files and several YAML files. The Python files will perform the Data Science steps such as training, evaluating and deploying a model. The YAML files, are used to set up the pipelines in DevOps and determine which Python files to execute in which order.
 
-1. Within the new project:
+1. Within the pre-created project:
 
    a. Select **Repos** from left navigation bar.
 
@@ -222,6 +218,9 @@ In this exercise, the CI will be built. In this pipeline a code quality check wi
 
 5. Select **Run Pipeline** and press **Run**
 
+> **Note**: If you get pop-up to grant permission click on **Permit**
+
+ ![permit.](media/dev-10.png "permit")
 ### Task 3: Review output of CI pipeline
 
 1. Select **Job** to view the current progress in the pipeline execution run
